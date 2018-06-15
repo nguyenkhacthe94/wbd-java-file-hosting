@@ -5,14 +5,16 @@ import com.upload.repository.UploadFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service("uploadFileService")
 public class UploadFileServiceImpl implements UploadFileService {
     @Autowired
     UploadFileRepository uploadFileRepository;
 
     @Override
-    public Page<UploadFile> findAll(Pageable pageable) {
-        return uploadFileRepository.findAll(pageable);
+    public Iterable<UploadFile> findAll() {
+        return uploadFileRepository.findAll();
     }
 
     @Override

@@ -5,10 +5,12 @@ import com.upload.model.UploadFileForm;
 import com.upload.service.UploadFileService;
 import com.upload.utils.StorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
@@ -48,6 +50,14 @@ public class UploadFileController {
         ModelAndView modelAndView = new ModelAndView("/upload");
         modelAndView.addObject("uploadFileForm", uploadFileForm);
         modelAndView.addObject("message", "new file is uploaded");
+        return modelAndView;
+    }
+
+    @GetMapping("/")
+    public ModelAndView showIndex() {
+        Iterable<UploadFile> uploadFiles = uploadFileService.findAll();
+        ModelAndView modelAndView = new ModelAndView("/index");
+        modelAndView.addObject("uploadFiles", uploadFiles);
         return modelAndView;
     }
 }

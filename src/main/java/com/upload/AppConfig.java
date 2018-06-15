@@ -3,6 +3,7 @@ package com.upload;
 import com.upload.service.UploadFileService;
 import com.upload.service.UploadFileServiceImpl;
 import com.upload.utils.StorageUtils;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -77,6 +78,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     public TemplateEngine templateEngine() {
         TemplateEngine templateEngine =new TemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.addDialect(new LayoutDialect());
         return templateEngine;
     }
 
@@ -136,7 +138,7 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
                 .addResourceHandler("/assets/**")
                 .addResourceLocations("/assets/");
         registry
-                .addResourceHandler("/features/**")
+                .addResourceHandler("/upload-features/**")
                 .addResourceLocations("file:" + StorageUtils.FEATURE_LOCATION + "/");
     }
 }

@@ -1,15 +1,100 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">
 <head>
-    <title>Upload File Request Page</title>
+    <meta charset="UTF-8">
+    <title>Upload file</title>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-<form method="POST" action="upload" enctype="multipart/form-data">
-    File to upload: <input type="file" name="file"><br />
-    Name: <input type="text" name="name"><br /> <br />
-
-    <input type="submit" value="Upload"> Press here to upload the file!
-</form>
+<section layout:fragment="content">
+    <h1>Upload File</h1>
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+    <form th:object="${uploadFileForm}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <input type="text" name="description" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>File:</label>
+            <input type="file" name="uploadedFile"/>
+        </div>
+        <div>
+            <label>Public: </label><br>
+            <label class="switch">
+                <input type="checkbox" name="public" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Upload">
+        </div>
+    </form>
+</section>
 </body>
 </html>

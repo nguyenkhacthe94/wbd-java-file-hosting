@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UploadFileService {
-    Page<UploadFile> findAll(Pageable pageable);
+    Iterable<UploadFile> findAll();
 
     UploadFile findById(Long id);
 
