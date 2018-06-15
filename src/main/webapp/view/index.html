@@ -97,9 +97,9 @@
                             <th:block th:if="${file.public}">Share</th:block>
                             <th:block th:if="${!file.public}">UnShare</th:block>
                         </td>
-                        <td><a th:href="@{/__${file.id}__/edit-file}">Edit</a></td>
+                        <td><a th:href="@{/__${file.id}__/edit}">Edit</a></td>
                         <td>Delete</td>
-                        <td><a th:href="@{/__${file.id}__/share-download-link}">Share</a></td>
+                        <td><a th:href="@{/__${file.id}__/share}">Share</a></td>
                     </tr>
                 </table>
             </div>

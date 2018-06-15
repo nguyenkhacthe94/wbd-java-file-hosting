@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit file</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Edit file information</h1>
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+    <form th:object="${uploadFileForm}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <input type="text" name="description" class="form-control">
+        </div>
+        <div>
+            <label>Public: </label><br>
+            <label class="switch">
+                <input type="checkbox" name="public" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>File:</label>
+            <input type="file" name="uploadedFile"/>
+        </div>
+    </form>
+</section>
+</body>
+</html>
