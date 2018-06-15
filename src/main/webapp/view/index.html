@@ -80,8 +80,8 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Status</th>
-                        <th>Share</th>
+                        <th>Is public</th>
+                        <th>Privacy status</th>
                         <th>Edit</th>
                         <th>Delete</th>
                         <th>Share By Email</th>
@@ -91,12 +91,22 @@
                         <td th:text="${file.name}"></td>
                         <td th:text="${file.description}"></td>
                         <td>
-                            <th:block th:if="${file.public}">Public</th:block>
-                            <th:block th:if="${!file.public}">Private</th:block>
+                            <th:block th:if="${file.public}">
+                                <label class="switch">
+                                <input type="checkbox" name="public" checked>
+                                <span class="slider round"></span>
+                            </label>
+                            </th:block>
+                            <th:block th:if="${!file.public}">
+                                <label class="switch">
+                                <input type="checkbox" name="public">
+                                <span class="slider round"></span>
+                            </label>
+                            </th:block>
                         </td>
                         <td>
-                            <th:block th:if="${file.public}">Share</th:block>
-                            <th:block th:if="${!file.public}">UnShare</th:block>
+                            <th:block th:if="${file.public}">Public</th:block>
+                            <th:block th:if="${!file.public}">Private</th:block>
                         </td>
                         <td><a th:href="@{/__${file.id}__/edit}">Edit</a></td>
                         <td><a th:href="@{/__${file.id}__/delete}">Delete</a></td>
