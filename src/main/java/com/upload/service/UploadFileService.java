@@ -1,8 +1,6 @@
 package com.upload.service;
 
 import com.upload.model.UploadFile;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface UploadFileService {
     Iterable<UploadFile> findAll();

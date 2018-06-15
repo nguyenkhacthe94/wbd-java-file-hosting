@@ -85,6 +85,7 @@
                         <th>Edit</th>
                         <th>Delete</th>
                         <th>Share By Email</th>
+                        <th>Download</th>
                     </tr>
                     <tr th:each="file : ${uploadFiles}">
                         <td></td>
@@ -111,6 +112,7 @@
                         <td><a th:href="@{/__${file.id}__/edit}">Edit</a></td>
                         <td><a th:href="@{/__${file.id}__/delete}">Delete</a></td>
                         <td><a th:href="@{/__${file.id}__/share}">Share</a></td>
+                        <td><a th:href="@{/__${file.id}__/download}">Download</a></td>
                     </tr>
                 </table>
             </div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>File information</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>File information</h1>
+<form th:object="${uploadFileForm}"  th:action="@{/__${uploadFileForm.id}__/downloading}" method="get" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+    <div class="form-group">
+        <label><h4>File name: </h4></label>
+        <p th:text="*{name}"></p>
+    </div>
+    <div>
+        <label><h4>Description:</h4> </label>
+        <p th:text="*{description}"></p>
+    </div>
+    <div>
+        <label><h4>File size:</h4></label>
+        <p th:text="${size}"></p>
+    </div>
+    <div>
+        <label><h4>Privacy Status:</h4></label>
+        <br>
+        <th:block th:if="*{public}">
+            <h5>Public</h5>
+            <br><input type="submit" value="Download">
+        </th:block>
+        <th:block th:if="*{!public}">
+            <h5>Private</h5>
+        </th:block>
+    </div>
+</form>
+</section>
+</body>
+</html>

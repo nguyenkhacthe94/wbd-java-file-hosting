@@ -13,6 +13,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -140,5 +143,34 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         registry
                 .addResourceHandler("/upload-features/**")
                 .addResourceLocations("file:" + StorageUtils.FEATURE_LOCATION + "/");
+    }
+
+    //Mail config
+    @Bean
+    public JavaMailSender getMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        //Using Gmail SMTP configuration.
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("khacthe.codegym@gmail.com");
+        mailSender.setPassword("Aptx4869");
+
+        Properties javaMailProperties = new Properties();
+        javaMailProperties.put("mail.smtp.starttls.enable", "true");
+        javaMailProperties.put("mail.smtp.auth", "true");
+        javaMailProperties.put("mail.transport.protocol", "smtp");
+        javaMailProperties.put("mail.debug", "true");
+
+        mailSender.setJavaMailProperties(javaMailProperties);
+        return mailSender;
+    }
+
+    @Bean
+    public SimpleMappingExceptionResolver exceptionResolver() {
+        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+        Properties exceptionMappings = new Properties();
+        exceptionMappings.put("java.lang.Exception", "/error");
+        exceptionResolver.setExceptionMappings(exceptionMappings);
+        return exceptionResolver;
     }
 }

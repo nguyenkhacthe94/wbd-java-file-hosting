@@ -4,12 +4,20 @@ import com.upload.model.UploadFile;
 import com.upload.model.UploadFileForm;
 import com.upload.service.UploadFileService;
 import com.upload.utils.StorageUtils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -114,5 +122,61 @@ public class UploadFileController {
         StorageUtils.removeFile(uploadFile.getUploadedFile());
         uploadFileService.delete(id);
         return "redirect:/";
+    }
+
+    @Autowired
+    JavaMailSender mailSender;
+
+    @GetMapping("/{id}/share")
+    public ModelAndView shareByEmailForm(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("/share");
+        modelAndView.addObject("id", id);
+        return modelAndView;
+    }
+
+    @PostMapping("/{id}/share.do")
+    public ModelAndView shareFileViaEmail(@PathVariable("id") Long id, @RequestParam("email") String email) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Link download File");
+        mailMessage.setText("http://localhost:8080/" + id + "/download");
+        mailSender.send(mailMessage);
+
+        ModelAndView modelAndView = new ModelAndView("/share");
+        modelAndView.addObject("message", "Download link has been sent to" + email);
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/download")
+    public ModelAndView showDownloadForm(@PathVariable("id") Long id) {
+        UploadFile uploadFile = uploadFileService.findById(id);
+        File file = new File(StorageUtils.FEATURE_LOCATION + "/" + uploadFile.getUploadedFile());
+        String size = FileUtils.byteCountToDisplaySize(file.getTotalSpace());
+
+        UploadFileForm uploadFileForm = new UploadFileForm();
+        uploadFileForm.setId(uploadFile.getId());
+        uploadFileForm.setName(uploadFile.getName());
+        uploadFileForm.setDescription(uploadFile.getDescription());
+        uploadFileForm.setPublic(uploadFile.isPublic());
+
+        ModelAndView modelAndView = new ModelAndView("/download");
+        modelAndView.addObject("uploadFileForm", uploadFileForm);
+        modelAndView.addObject("size", size);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/{id}/downloading")
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Long id) throws Exception {
+        UploadFile uploadFile = uploadFileService.findById(id);
+        File file = new File(StorageUtils.FEATURE_LOCATION + "/" + uploadFile.getUploadedFile());
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment;filename=" + file.getName())
+                .contentType(MediaType.MULTIPART_FORM_DATA).contentLength(file.length())
+                .body(resource);
     }
 }
