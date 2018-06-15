@@ -9,7 +9,7 @@ public class StorageUtils {
         return fileName.substring(dotIndex);
     }
 
-    public static void removeFeature(String fileName) {
+    public static void removeFile(String fileName) {
         File file = new File(FEATURE_LOCATION + "/" + fileName);
         if(file.exists()){
             file.delete();

@@ -5,7 +5,6 @@ import com.upload.model.UploadFileForm;
 import com.upload.service.UploadFileService;
 import com.upload.utils.StorageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -78,7 +77,7 @@ public class UploadFileController {
         UploadFile uploadFile = uploadFileService.findById(id);
         try {
             if (!uploadFileForm.getUploadedFile().isEmpty()) {
-                StorageUtils.removeFeature(uploadFile.getUploadedFile());
+                StorageUtils.removeFile(uploadFile.getUploadedFile());
                 String randomCode = UUID.randomUUID().toString();
                 String originFileName = uploadFileForm.getUploadedFile().getOriginalFilename();
                 String randomName = randomCode + StorageUtils.getFileExtension(originFileName);
@@ -99,5 +98,21 @@ public class UploadFileController {
         modelAndView.addObject("uploadFileForm", uploadFileForm);
         modelAndView.addObject("message", "File infomation is updated");
         return modelAndView;
+    }
+
+    @GetMapping("/{id}/delete")
+    public ModelAndView showDeleteForm(@PathVariable("id") Long id) {
+        UploadFile uploadFile = uploadFileService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("/delete");
+        modelAndView.addObject("uploadFile", uploadFile);
+        return modelAndView;
+    }
+
+    @PostMapping("/{id}/delete")
+    public String deleteFile(@PathVariable("id") Long id) {
+        UploadFile uploadFile = uploadFileService.findById(id);
+        StorageUtils.removeFile(uploadFile.getUploadedFile());
+        uploadFileService.delete(id);
+        return "redirect:/";
     }
 }

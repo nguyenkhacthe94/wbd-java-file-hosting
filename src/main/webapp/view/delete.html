@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete file</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Are you sure want to delete this file?</h1>
+    <form th:object="${uploadFile}" method="post">
+        <div class="form-group">
+            <label>Name: </label>
+            <p type="text" th:text="${uploadFile.name}"></p>
+        </div>
+        <div>
+            <input type="submit" value="DELETE FILE">
+        </div>
+    </form>
+</section>
+</body>
+</html>

@@ -70,6 +70,7 @@
         }
     </style>
 </head>
+<body>
 <section layout:fragment="content">
     <div class="container">
         <div class="row">
@@ -98,7 +99,7 @@
                             <th:block th:if="${!file.public}">UnShare</th:block>
                         </td>
                         <td><a th:href="@{/__${file.id}__/edit}">Edit</a></td>
-                        <td>Delete</td>
+                        <td><a th:href="@{/__${file.id}__/delete}">Delete</a></td>
                         <td><a th:href="@{/__${file.id}__/share}">Share</a></td>
                     </tr>
                 </table>
