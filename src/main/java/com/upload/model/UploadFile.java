@@ -13,6 +13,27 @@ public class UploadFile {
     private String description;
     private boolean isPublic;
 
+    @ManyToOne
+    @JoinColumn(name = "username_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UploadFile(String name, String uploadedFile, String description, boolean isPublic, User user) {
+
+        this.name = name;
+        this.uploadedFile = uploadedFile;
+        this.description = description;
+        this.isPublic = isPublic;
+        this.user = user;
+    }
+
     public UploadFile() {
     }
 
