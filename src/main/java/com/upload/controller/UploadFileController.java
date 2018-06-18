@@ -140,7 +140,7 @@ public class UploadFileController {
 
         mailMessage.setTo(email);
         mailMessage.setSubject("Link download File");
-        mailMessage.setText("http://localhost:8080/" + id + "/download");
+        mailMessage.setText("http://192.168.2.56:8080/" + id + "/download");
         mailSender.send(mailMessage);
 
         ModelAndView modelAndView = new ModelAndView("/share");
@@ -167,11 +167,13 @@ public class UploadFileController {
         return modelAndView;
     }
 
-    @GetMapping("/{id}/downloading")
+    @PostMapping("/{id}/downloading")
     @ResponseBody
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("id") Long id) throws Exception {
         UploadFile uploadFile = uploadFileService.findById(id);
+        System.out.println(uploadFile.toString());
         File file = new File(StorageUtils.FEATURE_LOCATION + "/" + uploadFile.getUploadedFile());
+        System.out.println("ok");
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,

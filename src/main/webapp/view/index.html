@@ -94,13 +94,13 @@
                         <td>
                             <th:block th:if="${file.public}">
                                 <label class="switch">
-                                    <input type="checkbox" name="public" checked onclick="this.form.submit()">
+                                    <input type="checkbox" name="public" checked>
                                     <span class="slider round"></span>
                                 </label>
                             </th:block>
                             <th:block th:if="${!file.public}">
                                 <label class="switch">
-                                    <input type="checkbox" name="public" onclick="this.form.submit()">
+                                    <input type="checkbox" name="public">
                                     <span class="slider round"></span>
                                 </label>
                             </th:block>

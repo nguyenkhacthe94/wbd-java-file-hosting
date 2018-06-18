@@ -9,7 +9,7 @@
 <body>
 <section layout:fragment="content">
     <h1>File information</h1>
-<form th:object="${uploadFileForm}"  th:action="@{/__${uploadFileForm.id}__/downloading}" method="get" enctype="multipart/form-data">
+<form th:object="${uploadFileForm}"  th:action="@{/__${uploadFileForm.id}__/downloading}" method="post" enctype="multipart/form-data">
     <input type="hidden" th:field="*{id}">
     <div class="form-group">
         <label><h4>File name: </h4></label>
