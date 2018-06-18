@@ -2,7 +2,7 @@ package com.upload.controller;
 
 import com.upload.model.UploadFile;
 import com.upload.model.UploadFileForm;
-import com.upload.service.UploadFileService;
+import com.upload.service.upload.UploadFileService;
 import com.upload.utils.StorageUtils;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;

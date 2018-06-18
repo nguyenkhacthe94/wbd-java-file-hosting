@@ -1,7 +1,7 @@
 package com.upload;
 
-import com.upload.service.UploadFileService;
-import com.upload.service.UploadFileServiceImpl;
+import com.upload.service.upload.UploadFileService;
+import com.upload.service.upload.UploadFileServiceImpl;
 import com.upload.utils.StorageUtils;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.BeansException;

@@ -1,10 +1,8 @@
-package com.upload.service;
+package com.upload.service.upload;
 
 import com.upload.model.UploadFile;
 import com.upload.repository.UploadFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service("uploadFileService")

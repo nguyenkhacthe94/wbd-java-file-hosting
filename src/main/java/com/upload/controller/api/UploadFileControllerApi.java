@@ -1,7 +1,7 @@
 package com.upload.controller.api;
 
 import com.upload.model.UploadFile;
-import com.upload.service.UploadFileService;
+import com.upload.service.upload.UploadFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
